@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomTypeController;
+use App\Http\Controllers\DiscountController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -48,7 +49,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/room-type-store', [RoomTypeController::class, 'store']);
         Route::delete('/room-type-delete/{id}', [RoomTypeController::class, 'destroy']);
 
+    Route::get('/discount', function () {
+        return Inertia::render('Discount');
+    })->name('discount')->middleware('can:view discounts');
+         Route::get('/discount-data', [DiscountController::class, 'index']);
+        Route::post('/discount-store', [DiscountController::class, 'store']);
+        Route::delete('/discount-delete/{id}', [DiscountController::class, 'destroy']);
+        Route::get('/discount-room-options', [DiscountController::class, 'roomList']);
     });
+
 // Authenticated routes (for profile settings)
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

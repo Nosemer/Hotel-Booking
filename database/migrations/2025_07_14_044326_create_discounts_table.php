@@ -6,31 +6,27 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
-{
-    Schema::create('discounts', function (Blueprint $table) {
-        $table->id();
-        $table->string('discount_code', 50)->nullable();
-        $table->enum('type', ['percentage', 'fixed_amount']);
-        $table->decimal('value', 10, 2);
-        $table->enum('applicable_to', ['room_type', 'room', 'booking', 'branches']);
-        $table->string('room_type', 50)->nullable();
-        $table->unsignedBigInteger('room_id')->nullable();
-        $table->date('valid_from')->nullable();
-        $table->date('valid_to')->nullable();
-        $table->timestamps();
+    {
+        Schema::create('discounts', function (Blueprint $table) {
+            $table->id();
+            $table->string('discount_code', 50)->nullable();
+            $table->enum('type', ['percentage', 'fixed_amount']);
+            $table->decimal('value', 10, 2);
+            $table->enum('applicable_to', ['room_type', 'room', 'booking', 'branches']);
+            $table->unsignedBigInteger('room_type_id')->nullable();
+            $table->unsignedBigInteger('room_id')->nullable();
+            $table->unsignedBigInteger('booking_id')->nullable();
+            $table->unsignedBigInteger('branch_id')->nullable();
+            $table->date('valid_from')->nullable();
+            $table->date('valid_to')->nullable();
+            $table->timestamps();
 
-        $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
-    });
-}
+            // No foreign keys here
+        });
+    }
 
-
-    /**
-     * Reverse the migrations.
-     */
+    
     public function down(): void
     {
         Schema::dropIfExists('discounts');

@@ -14,20 +14,32 @@ class Discount extends Model
         'type',
         'value',
         'applicable_to',
-        'room_type',
+        'room_type_id',
         'room_id',
+        'booking_id',
+        'branch_id',
         'valid_from',
         'valid_to'
     ];
+
+     public function roomType()
+    {
+        return $this->belongsTo(RoomType::class);
+    }
 
     public function room()
     {
         return $this->belongsTo(Room::class);
     }
 
-    public function vouchers()
+    public function branch()
     {
-        return $this->hasMany(Voucher::class);
+        return $this->belongsTo(Branch::class);
+    }
+
+    public function booking()
+    {
+        return $this->belongsTo(Booking::class);
     }
 }
 

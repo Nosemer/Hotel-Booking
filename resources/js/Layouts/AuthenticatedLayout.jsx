@@ -56,6 +56,14 @@ export default function AuthenticatedLayout({ header, children }) {
                                             Room Type
                                         </NavLink>
                                     )}
+                                {permissions.includes('view discounts') && (
+                                        <NavLink
+                                            href={route('discount')}
+                                            active={route().current('discount')}
+                                        >
+                                            Discount
+                                        </NavLink>
+                                    )}
                             </div>
                         </div>
 
